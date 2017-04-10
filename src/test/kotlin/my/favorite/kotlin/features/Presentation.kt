@@ -55,7 +55,7 @@ import java.util.concurrent.TimeoutException
 
 
 
-fun String.echo(): Unit{
+fun String.echo(): Unit {
     println(this)
 }
 
@@ -264,7 +264,7 @@ class NullTypes {
     var nonNullString: String = ""
 
 
-    // They are still types with the nullable type as a super type of the null type
+    // They are still types where the nullable type is a super type of the non null type
 
     val `nonNullString is a super type Of nullString`: String? = nonNullString
 
@@ -273,6 +273,42 @@ class NullTypes {
 
     // Applies to user defined types not just platform types
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class SmartCast {
+
+    val nullString: String? = null
+
+    fun doTheMagic(){
+        if (nullString != null) println(nullString.length)
+//        println(nullString.length)
+    }
+}
+
+
+
 
 
 
@@ -334,39 +370,6 @@ class ExtendNullTypes {
 
 
 
-class SmartCast {
-
-    val nullString: String? = null
-
-    fun doTheMagic(){
-        if (nullString != null) println(nullString.length)
-//        println(nullString.length)
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class NullableTypeParameters {
 
@@ -374,9 +377,6 @@ class NullableTypeParameters {
 
     fun <T : Any> possiblyNull(thing: T?) = if (thing == null) throw NullPointerException() else thing
 }
-
-
-
 
 
 
@@ -546,10 +546,10 @@ class KotlinOneManBand : Drummer by OneRhythmDrummer(), Singer by DrunkenSinger(
 // The covariance problem
 
 class InOutAndShakeItAllAbout {
-    class Box<out T>
+    class Box<T>
 
     fun covariantAssign(boxOfInteger: Box<Int>) {
-        val boxOfNumber:Box<Number> = boxOfInteger
+//        val boxOfNumber:Box<Number> = boxOfInteger
     }
 }
 
@@ -580,7 +580,7 @@ interface EasyToReadTypeSignatures {
     // In Java for a Stream<T> the signature for flat map looks like this
     //<R> Stream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper);
 
-    interface Function<in IN, out OUT>
+    interface Function<in T, out R>
 
     interface Stream<out T> {
         fun <R> flatMap(f: Function<T, R>): Stream<R>
@@ -663,6 +663,7 @@ class ReifiedGenerics {
  - Tail recursion
  - Delegated properties
  - Infix function notation
+ - String templates`
 
  */
 
